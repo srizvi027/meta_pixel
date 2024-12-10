@@ -24,6 +24,7 @@ const ACCESS_TOKEN =
   "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
 
 // Function to send events to Meta
+// Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
   try {
     const response = await axios.post(
@@ -33,8 +34,12 @@ async function sendToMeta(eventName, eventData) {
           {
             event_name: eventName,
             event_time: Math.floor(Date.now() / 1000),
-            event_source_url: eventData.url,
-            user_data: eventData.userData,
+            event_source_url: eventData.url, // Add event source URL
+            user_data: {
+              // Add customer information parameters
+              client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
+              // You can add more fields like email, phone, etc. based on your data
+            },
             custom_data: eventData.customData,
           },
         ],
@@ -49,6 +54,7 @@ async function sendToMeta(eventName, eventData) {
     );
   }
 }
+
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
