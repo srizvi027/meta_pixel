@@ -24,7 +24,6 @@ const ACCESS_TOKEN =
   "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
 
 // Function to send events to Meta
-// Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
   try {
@@ -42,6 +41,7 @@ async function sendToMeta(eventName, eventData) {
               // You can add more fields like email, phone, etc. based on your data
             },
             custom_data: eventData.customData,
+            test_event_code: "TEST57343", // Include your test event code here
           },
         ],
         access_token: ACCESS_TOKEN,
@@ -55,7 +55,6 @@ async function sendToMeta(eventName, eventData) {
     );
   }
 }
-
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
