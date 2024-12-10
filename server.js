@@ -28,7 +28,7 @@ async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
   try {
     const response = await axios.post(
-      `https://graph.facebook.com/v12.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}&test_event_code=TEST57343`, // Include test_event_code in the URL
+      `https://graph.facebook.com/v12.0/${PIXEL_ID}/events`,
       {
         data: [
           {
@@ -36,13 +36,20 @@ async function sendToMeta(eventName, eventData) {
             event_time: Math.floor(Date.now() / 1000),
             event_source_url: eventData.url, // Add event source URL
             user_data: {
-              // Add customer information parameters
               client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
-              // You can add more fields like email, phone, etc. based on your data
+              // Adding more customer information for better matching
+              email: "testuser@example.com",  // Hardcoded email for testing
+              phone: "1234567890",            // Hardcoded phone number
+              first_name: "John",             // Hardcoded first name
+              last_name: "Doe",               // Hardcoded last name
+              country: "US",                  // Hardcoded country
+              zip: "10001",                   // Hardcoded zip code
+              city: "New York",               // Hardcoded city
             },
             custom_data: eventData.customData,
           },
         ],
+        access_token: ACCESS_TOKEN,
       }
     );
     console.log("Event sent:", response.data);
