@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const cors = require("cors"); // Import cors
 
 const app = express();
+app.use(cors()); // Enable CORS for all origins
 app.use(bodyParser.json());
 
 // Replace with your Meta Pixel ID and Access Token
@@ -33,9 +35,9 @@ async function sendToMeta(eventName, eventData) {
   }
 }
 
-
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
+  console.log("req.body");
   const { eventName, eventData } = req.body;
   sendToMeta(eventName, eventData);
   res.status(200).send({ success: true });
@@ -44,4 +46,3 @@ app.post("/track-event1", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
