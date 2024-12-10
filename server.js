@@ -1,18 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const cors = require("cors");
 
 const app = express();
 
-// Enable CORS for your frontend domain
-app.use(
-  cors({
-    origin: "https://cameron.prowingz.com", // Replace with your frontend domain
-    methods: ["POST"], // Allow only POST requests
-    allowedHeaders: ["Content-Type"], // Allow the Content-Type header
-  })
-);
+// Explicitly set CORS headers for preflight requests (OPTIONS)
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://cameron.prowingz.com"); // Allow only your frontend
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS"); // Allowed methods
+  res.header("Access-Control-Allow-Headers", "Content-Type"); // Allowed headers
+  if (req.method === "OPTIONS") {
+    return res.status(200).send(); // Preflight response
+  }
+  next();
+});
 
 // Parse JSON bodies
 app.use(bodyParser.json());
