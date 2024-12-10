@@ -28,7 +28,7 @@ async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
   try {
     const response = await axios.post(
-      `https://graph.facebook.com/v12.0/${PIXEL_ID}/events`,
+      `https://graph.facebook.com/v12.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}&test_event_code=TEST57343`, // Include test_event_code in the URL
       {
         data: [
           {
@@ -41,10 +41,8 @@ async function sendToMeta(eventName, eventData) {
               // You can add more fields like email, phone, etc. based on your data
             },
             custom_data: eventData.customData,
-            test_event_code: "TEST57343", // Include your test event code here
           },
         ],
-        access_token: ACCESS_TOKEN,
       }
     );
     console.log("Event sent:", response.data);
