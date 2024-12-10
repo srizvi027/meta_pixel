@@ -1,15 +1,26 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const cors = require("cors"); // Import cors
+const cors = require("cors");
 
 const app = express();
-app.use(cors()); // Enable CORS for all origins
+
+// Enable CORS for your frontend domain
+app.use(
+  cors({
+    origin: "https://cameron.prowingz.com", // Replace with your frontend domain
+    methods: ["POST"], // Allow only POST requests
+    allowedHeaders: ["Content-Type"], // Allow the Content-Type header
+  })
+);
+
+// Parse JSON bodies
 app.use(bodyParser.json());
 
 // Replace with your Meta Pixel ID and Access Token
 const PIXEL_ID = "592807929789990";
-const ACCESS_TOKEN = "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
+const ACCESS_TOKEN =
+  "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
 
 // Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
@@ -31,15 +42,22 @@ async function sendToMeta(eventName, eventData) {
     );
     console.log("Event sent:", response.data);
   } catch (error) {
-    console.error("Error sending event to Meta:", error.response?.data || error.message);
+    console.error(
+      "Error sending event to Meta:",
+      error.response?.data || error.message
+    );
   }
 }
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
-  console.log("req.body");
+  console.log("Request body:", req.body);
   const { eventName, eventData } = req.body;
+
+  // Call function to send event to Meta
   sendToMeta(eventName, eventData);
+
+  // Respond to the frontend
   res.status(200).send({ success: true });
 });
 
