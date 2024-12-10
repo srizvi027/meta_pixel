@@ -26,6 +26,7 @@ const ACCESS_TOKEN =
 // Function to send events to Meta
 // Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
+  console.log("sendToMeta trigger");
   try {
     const response = await axios.post(
       `https://graph.facebook.com/v12.0/${PIXEL_ID}/events`,
