@@ -35,7 +35,7 @@ async function sendToMeta(eventName, eventData) {
 
 
 // API endpoint to receive events from your website
-app.post("/track-event", (req, res) => {
+app.post("/track-event1", (req, res) => {
   const { eventName, eventData } = req.body;
   sendToMeta(eventName, eventData);
   res.status(200).send({ success: true });
