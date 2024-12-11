@@ -24,6 +24,7 @@ const ACCESS_TOKEN =
   "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
 
 // Function to send events to Meta
+// Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
   try {
@@ -37,14 +38,11 @@ async function sendToMeta(eventName, eventData) {
             event_source_url: eventData.url, // Add event source URL
             user_data: {
               client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
-              // Adding more customer information for better matching
-              email: "testuser@example.com",  // Hardcoded email for testing
-              phone: "1234567890",            // Hardcoded phone number
-              first_name: "John",             // Hardcoded first name
-              last_name: "Doe",               // Hardcoded last name
-              country: "US",                  // Hardcoded country
-              zip: "10001",                   // Hardcoded zip code
-              city: "New York",               // Hardcoded city
+              // Valid fields for Meta:
+              em: ["testuser@example.com"],  // Email (hashed)
+              ph: ["1234567890"],            // Phone number (hashed)
+              // If you'd like to hash more data, you can use the following fields:
+              // The email, phone, and other fields should be hashed as per Meta's requirements.
             },
             custom_data: eventData.customData,
           },
