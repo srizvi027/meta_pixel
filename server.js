@@ -47,7 +47,7 @@ async function sendToMeta(eventName, eventData) {
             event_name: eventName,
             event_time: Math.floor(Date.now() / 1000),
             event_source_url: eventData.url, // Add event source URL
-            action_source: eventData.url,
+            action_source: "website",
             user_data: {
               client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
               em: [hashedEmail],  // Hashed email
