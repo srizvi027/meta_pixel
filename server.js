@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
-const crypto = require("crypto");
+const crypto = require('crypto');
 
 const app = express();
 
@@ -26,22 +26,15 @@ const ACCESS_TOKEN =
 
 // Function to hash the input string using SHA-256
 function hashString(value) {
-  if (!value) return null; // Handle null or undefined values
-  return crypto.createHash("sha256").update(value).digest("hex");
+  return crypto.createHash('sha256').update(value).digest('hex');
 }
 
 // Function to send events to Meta
-async function sendToMeta() {
+async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
 
-  // Hardcoded email and phone
-  const hashedEmail = hashString("testuser@example.com"); // Replace with actual email
-  const hashedPhone = hashString(null); // Intentionally null to match your structure
-
-  const eventData = {
-    currency: "USD",
-    value: "142.52",
-  };
+  const hashedEmail = hashString("testuser@example.com"); // Replace with the actual email
+  const hashedPhone = hashString("1234567890"); // Replace with the actual phone number
 
   const testEventCode = "TEST57343"; // Replace with your actual test event code
 
@@ -51,23 +44,22 @@ async function sendToMeta() {
       {
         data: [
           {
-            event_name: "Purchase",
+            event_name: eventName,
             event_time: Math.floor(Date.now() / 1000),
-            action_source: "website",
+            event_source_url: eventData.url, // Add event source URL
+            action_source: eventData.url,
             user_data: {
-              em: [hashedEmail],
-              ph: [hashedPhone],
+              client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
+              em: [hashedEmail],  // Hashed email
+              ph: [hashedPhone],  // Hashed phone number
             },
-            custom_data: eventData,
-            original_event_data: {
-              event_name: "Purchase",
-              event_time: Math.floor(Date.now() / 1000),
-            },
+            custom_data: eventData.customData,
           },
         ],
         access_token: ACCESS_TOKEN,
-        test_event_code: testEventCode, // Test Event Code for instant visibility
+        test_event_code: testEventCode, // Add test event code here
       }
+      
     );
     console.log("Event sent:", response.data);
   } catch (error) {
@@ -80,12 +72,11 @@ async function sendToMeta() {
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
-  console.log("Hardcoded event triggered.");
-  
-  // Call function to send hardcoded event to Meta
-  sendToMeta();
+  console.log("Request body:", req.body);
+  const { eventName, eventData } = req.body;
 
-  // Respond to the frontend
+  sendToMeta(eventName, eventData);
+
   res.status(200).send({ success: true });
 });
 
