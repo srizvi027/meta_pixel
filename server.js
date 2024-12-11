@@ -20,9 +20,9 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Replace with your Meta Pixel ID and Access Token
-const PIXEL_ID = "592807929789990";
+const PIXEL_ID = "3741334332785306";
 const ACCESS_TOKEN =
-  "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
+  "EAAhaFaSOtjsBO6bGYNHqIKlsogAwW1HEJZAL2M7yphyNLroRYOVq11juKlWpyZAxrPNVP6OIGE7V5bnjfMTUzI9BYonIZCG8kA5MheZBQonJkqwoXZBLXqEnNWXdJc9GPgWNZC4z2ZCcaaZA8zJlxgwHXGHR4tuDBHcDiLrLekcDYZB9nqwXCdDvjwVdxJEPMyDqXfQZDZD";
 
 // Function to hash the input string using SHA-256
 function hashString(value) {
