@@ -20,9 +20,9 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Replace with your Meta Pixel ID and Access Token
-const PIXEL_ID = "3741334332785306";
+const PIXEL_ID = "592807929789990";
 const ACCESS_TOKEN =
-  "EAAhaFaSOtjsBO6bGYNHqIKlsogAwW1HEJZAL2M7yphyNLroRYOVq11juKlWpyZAxrPNVP6OIGE7V5bnjfMTUzI9BYonIZCG8kA5MheZBQonJkqwoXZBLXqEnNWXdJc9GPgWNZC4z2ZCcaaZA8zJlxgwHXGHR4tuDBHcDiLrLekcDYZB9nqwXCdDvjwVdxJEPMyDqXfQZDZD";
+  "EAAhaFaSOtjsBO8vmYbA78SPgj3KPmlL0WRYDFpUwzLHLdK9HRnRpfqfd4tGNzlS1FZC8wtvzDF0ZCja2ZBc6zRMjnAmfuZAgIcvmpwC1ZCwkAQSLpLMPnCwRK7qW2BYQko4N1EU4hZCZCXdHMUgqNDJho3iuPrxJQHUFhQ4cG40Mh6ZAzzxruw2Fh14tOr1MaXXZA4wZDZD";
 
 // Function to hash the input string using SHA-256
 function hashString(value) {
@@ -36,7 +36,7 @@ async function sendToMeta(eventName, eventData) {
   const hashedEmail = hashString("testuser@example.com"); // Replace with the actual email
   const hashedPhone = hashString("1234567890"); // Replace with the actual phone number
 
-  const testEventCode = "TEST45960"; // Replace with your actual test event code
+  const testEventCode = "TEST57343"; // Replace with your actual test event code
 
   try {
     const response = await axios.post(
