@@ -53,7 +53,6 @@ async function sendToMeta(eventName, eventData) {
               em: [hashedEmail],  // Hashed email
               ph: [hashedPhone],  // Hashed phone number
             },
-            custom_data: eventData.customData,
           },
         ],
         access_token: ACCESS_TOKEN,
