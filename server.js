@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const crypto = require('crypto');
 
 const app = express();
 
@@ -23,10 +24,6 @@ const PIXEL_ID = "592807929789990";
 const ACCESS_TOKEN =
   "EAAhaFaSOtjsBO5SrVn5PX3mG7jbguZAas0gY9RM3RBAezDuj8glgPtAjIRygicZCmboqEVFpXHVICtRsKVZCkuTjya8aU1E1g2DPpLcVfWqMNtf1rxlDt1PnZBoKOyf0rmoCvInwNZAXQtXNlAH7ib61sWX73382iy4cWaFKJJZC051eOsMbn4sQ5MTcDBp2TXkwZDZD";
 
-// Function to send events to Meta
-// Function to send events to Meta
-const crypto = require('crypto');
-
 // Function to hash the input string using SHA-256
 function hashString(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
@@ -38,6 +35,8 @@ async function sendToMeta(eventName, eventData) {
 
   const hashedEmail = hashString("testuser@example.com"); // Replace with the actual email
   const hashedPhone = hashString("1234567890"); // Replace with the actual phone number
+
+  const testEventCode = "TEST1234"; // Replace with your actual test event code
 
   try {
     const response = await axios.post(
@@ -57,6 +56,7 @@ async function sendToMeta(eventName, eventData) {
           },
         ],
         access_token: ACCESS_TOKEN,
+        test_event_code: testEventCode, // Add test event code here
       }
     );
     console.log("Event sent:", response.data);
@@ -67,7 +67,6 @@ async function sendToMeta(eventName, eventData) {
     );
   }
 }
-
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
