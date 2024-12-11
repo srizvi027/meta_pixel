@@ -36,7 +36,7 @@ async function sendToMeta(eventName, eventData) {
   const hashedEmail = hashString("testuser@example.com"); // Replace with the actual email
   const hashedPhone = hashString("1234567890"); // Replace with the actual phone number
 
-  const testEventCode = "TEST1234"; // Replace with your actual test event code
+  const testEventCode = "TEST45960"; // Replace with your actual test event code
 
   try {
     const response = await axios.post(
