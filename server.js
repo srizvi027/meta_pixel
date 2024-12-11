@@ -25,8 +25,20 @@ const ACCESS_TOKEN =
 
 // Function to send events to Meta
 // Function to send events to Meta
+const crypto = require('crypto');
+
+// Function to hash the input string using SHA-256
+function hashString(value) {
+  return crypto.createHash('sha256').update(value).digest('hex');
+}
+
+// Function to send events to Meta
 async function sendToMeta(eventName, eventData) {
   console.log("sendToMeta trigger");
+
+  const hashedEmail = hashString("testuser@example.com"); // Replace with the actual email
+  const hashedPhone = hashString("1234567890"); // Replace with the actual phone number
+
   try {
     const response = await axios.post(
       `https://graph.facebook.com/v12.0/${PIXEL_ID}/events`,
@@ -38,11 +50,8 @@ async function sendToMeta(eventName, eventData) {
             event_source_url: eventData.url, // Add event source URL
             user_data: {
               client_user_agent: eventData.userAgent, // Client user agent (navigator.userAgent)
-              // Valid fields for Meta:
-              em: ["testuser@example.com"],  // Email (hashed)
-              ph: ["1234567890"],            // Phone number (hashed)
-              // If you'd like to hash more data, you can use the following fields:
-              // The email, phone, and other fields should be hashed as per Meta's requirements.
+              em: [hashedEmail],  // Hashed email
+              ph: [hashedPhone],  // Hashed phone number
             },
             custom_data: eventData.customData,
           },
@@ -58,6 +67,7 @@ async function sendToMeta(eventName, eventData) {
     );
   }
 }
+
 
 // API endpoint to receive events from your website
 app.post("/track-event1", (req, res) => {
